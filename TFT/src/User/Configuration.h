@@ -75,7 +75,7 @@
  * Options: MODE_MARLIN (Marlin Mode)
  *          MODE_SERIAL_TSC (Touch Mode)
  */
-#define DEFAULT_LCD_MODE MODE_SERIAL_TSC // Default: MODE_SERIAL_TSC
+#define DEFAULT_LCD_MODE MODE_MARLIN // Default: MODE_SERIAL_TSC
 
 /**
  * Default Marlin Mode Background & Font Color Options
@@ -86,7 +86,7 @@
  *         12: DARKBLUE,  13: DARKGREEN,  14: GRAY,   15: DARKGRAY
  */
 #define MARLIN_BKCOLOR 1 // Default: 1
-#define MARLIN_FNCOLOR 0 // Default: 0
+#define MARLIN_FNCOLOR 3 // Default: 0
 
 // Text displayed at the top of the TFT in Marlin Mode.
 #define MARLIN_BANNER_TEXT "LCD12864 Emulator"  // Default: "LCD12864 Emulator"
@@ -99,7 +99,7 @@
  * Options:  0: Disabled (RECOMMENDED FOR TFT24)
  *           1: Enabled
  */
-#define DEFAULT_ST7920_FULLSCREEN_MODE 0 // Default: 0
+#define DEFAULT_ST7920_FULLSCREEN_MODE 1 // Default: 0
 
 /**
  * Keep Serial always On (ONLY SUPPORTED ON TFT24 V1.1, TFT35 V3.0, AND TFT28 V3.0)
@@ -139,7 +139,7 @@
 
 #define PREHEAT_LABELS   {"PLA", "PETG", "ABS", "WOOD", "TPU", "NYLON"}
 #define PREHEAT_HOTEND   {200,   240,    230,   170,    220,   250}
-#define PREHEAT_BED      {60,    70,     90,    50,     50,    90}
+#define PREHEAT_BED      {60,    80,     90,    50,     50,    90}
 
 #define HEAT_MAX_TEMP    {275,       275,       275,       275,       275,       275,       150,    60}
 #define HEAT_SIGN_ID     {"T0:",     "T1:",     "T2:",     "T3:",     "T4:",     "T5:",     "B:",   "C:"}
@@ -185,12 +185,12 @@
 #define X_MIN_POS   0
 #define Y_MIN_POS   0
 #define Z_MIN_POS   0
-#define X_MAX_POS 235
-#define Y_MAX_POS 235
+#define X_MAX_POS 225
+#define Y_MAX_POS 225
 #define Z_MAX_POS 250
 
 // Pause Settings
-#define NOZZLE_PAUSE_RETRACT_LENGTH               15  // (mm)
+#define NOZZLE_PAUSE_RETRACT_LENGTH               1.5  // (mm)
 #define NOZZLE_RESUME_PURGE_LENGTH                16  // (mm)
 #define NOZZLE_PAUSE_X_POSITION     (X_MIN_POS + 10)  // (mm) Must be an integer
 #define NOZZLE_PAUSE_Y_POSITION     (Y_MIN_POS + 10)  // (mm) Must be an integer
@@ -322,7 +322,7 @@
  *           3: LED_ORANGE,  4: LED_YELLOW,  5: LED_GREEN,
  *           6: LED_BLUE,    7: LED_INDIGO,  8: LED_VIOLET
 */
-#define STARTUP_KNOB_LED_COLOR 1 // Default: 1
+#define STARTUP_KNOB_LED_COLOR 5 // Default: 1
 
 // Keep the LED state in Marlin Mode
 #define KEEP_KNOB_LED_COLOR_MARLIN_MODE
