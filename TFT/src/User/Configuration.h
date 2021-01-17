@@ -75,7 +75,7 @@
  * Options: MODE_MARLIN (Marlin Mode)
  *          MODE_SERIAL_TSC (Touch Mode)
  */
-#define DEFAULT_LCD_MODE MODE_MARLIN // Default: MODE_SERIAL_TSC
+#define DEFAULT_LCD_MODE MODE_SERIAL_TSC// Default: MODE_SERIAL_TSC
 
 /**
  * Default Marlin Mode Background & Font Color Options
@@ -109,7 +109,7 @@
  *
  * Options:  0: Disabled    1: Enabled
  */
-#define SERIAL_ALWAYS_ON 0  // Default: 0
+#define SERIAL_ALWAYS_ON 1  // Default: 0
 
 /**
  * LCD/Touch Encoder
@@ -185,8 +185,8 @@
 #define X_MIN_POS   0
 #define Y_MIN_POS   0
 #define Z_MIN_POS   0
-#define X_MAX_POS 225
-#define Y_MAX_POS 225
+#define X_MAX_POS 232
+#define Y_MAX_POS 232
 #define Z_MAX_POS 250
 
 // Pause Settings
