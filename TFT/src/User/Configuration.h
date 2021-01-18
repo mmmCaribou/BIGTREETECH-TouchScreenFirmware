@@ -16,7 +16,7 @@
 
 // Enable Status Screen
 // Enable this to show status screen as the default home screen. Disabling it will show a static menu.
-#define ENABLE_STATUS_SCREEN true // To enabled: true | To disabled: false (Default: 1)
+#define ENABLE_STATUS_SCREEN 1 // To enabled: true | To disabled: false (Default: 1)
 
 /**
  * This setting determines the communication speed of the printer.
@@ -75,7 +75,7 @@
  * Options: MODE_MARLIN (Marlin Mode)
  *          MODE_SERIAL_TSC (Touch Mode)
  */
-#define DEFAULT_LCD_MODE MODE_SERIAL_TSC// Default: MODE_SERIAL_TSC
+#define DEFAULT_LCD_MODE MODE_MARLIN// Default: MODE_SERIAL_TSC
 
 /**
  * Default Marlin Mode Background & Font Color Options
@@ -89,7 +89,7 @@
 #define MARLIN_FNCOLOR 3 // Default: 0
 
 // Text displayed at the top of the TFT in Marlin Mode.
-#define MARLIN_BANNER_TEXT "LCD12864 Emulator"  // Default: "LCD12864 Emulator"
+#define MARLIN_BANNER_TEXT "LCD12864 UPDATED 011721"  // Default: "LCD12864 Emulator"
 
 // show banner text at the top of the TFT in Marlin Mode.
 #define MARLIN_SHOW_BANNER true // To enabled: true | To disabled: false (Default: true)
@@ -116,7 +116,7 @@
  * In case LCD/Touch Encoder's sliding buttons (pin LCD_ENCA_PIN and LCD_ENCB_PIN)
  * don't produce any movement on menu, try to increase the delay (e.g. 64)
  */
-#define LCD_ENCODER_DELAY 8  // (MicroSeconds) 1 MicroSeconds = 0.000001 Seconds (Default: 8)
+#define LCD_ENCODER_DELAY 64  // (MicroSeconds) 1 MicroSeconds = 0.000001 Seconds (Default: 8)
 
 //===========================================================================
 //=========================== Machine Settings ==============================
@@ -296,7 +296,7 @@
 //===========================================================================
 
 // Show bootscreen when starting up
-#define SHOW_BTT_BOOTSCREEN
+//#define SHOW_BTT_BOOTSCREEN
 
 // Enable alternative Move Menu Buttons Layout matching the direction of actual printer axis.
 // update the icons from alternate icon folder
