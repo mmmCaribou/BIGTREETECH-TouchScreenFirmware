@@ -1,9 +1,9 @@
 #include "Popup.h"
 #include "includes.h"
 
-#define X_MAX_CHAR      (LCD_WIDTH / BYTE_WIDTH)
-#define MAX_MSG_LINES   4
-#define POPUP_MAX_CHAR  (X_MAX_CHAR * MAX_MSG_LINES)
+#define X_MAX_CHAR     (LCD_WIDTH / BYTE_WIDTH)
+#define MAX_MSG_LINES  4
+#define POPUP_MAX_CHAR (X_MAX_CHAR * MAX_MSG_LINES)
 
 static BUTTON bottomSingleBtn = {
   //button location                       color before pressed   color after pressed
@@ -93,7 +93,7 @@ void popupDrawPage(DIALOG_TYPE type, BUTTON * btn, const uint8_t * title, const 
   }
 }
 
-static void menuDialog(void)
+void menuDialog(void)
 {
   while (infoMenu.menu[infoMenu.cur] == menuDialog)
   {
@@ -206,7 +206,6 @@ void showDialog(DIALOG_TYPE type, void (*ok_action)(), void (*cancel_action)(), 
   action_loop = loop_action;
 }
 
-
 void loopPopup(void)
 {
   if (popup_redraw == false)
@@ -222,11 +221,19 @@ void loopPopup(void)
     popupDrawPage(popup_type, bottomDoubleBtn, popup_title, popup_msg, popup_ok, popup_cancel);
     cur_btn_rect = doubleBtnRect;
   }
-  else
+  else if (popup_ok[0])
   {
     popupDrawPage(popup_type, &bottomSingleBtn, popup_title, popup_msg, popup_ok, NULL);
     cur_btn_rect = &singleBtnRect;
   }
+  else  // if no button is requested
+  {
+    // display only a splash screen, avoiding to register the menuDialog handler
+    // (the handler needs at least one button to allow to close the dialog box)
+    popupDrawPage(popup_type, NULL, popup_title, popup_msg, NULL, NULL);
+    return;
+  }
+
   //avoid to nest menuDialog popup type (while a menuNotification popup type can be overridden)
   if (infoMenu.menu[infoMenu.cur] != menuDialog)
   { //handle the user interaction, then reload the previous menu

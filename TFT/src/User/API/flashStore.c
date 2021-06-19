@@ -1,19 +1,19 @@
-#include <string.h>
 #include "flashStore.h"
 #include "STM32_Flash.h"
+#include <string.h>
 
-#define TSC_SIGN  0x20200512 // DO NOT MODIFY
-#define PARA_SIGN 0x20210130 // (YYYYMMDD) If a new setting parameter is added,
-                             // modify here and initialize the initial value
-                             // in the "infoSettingsReset()" function
+#define TSC_SIGN  0x20200512  // DO NOT MODIFY
+#define PARA_SIGN 0x20210311  // (YYYYMMDD) If a new setting parameter is added,
+                              // modify here and initialize the initial value
+                              // in the "infoSettingsReset()" function
 enum
 {
   PARA_TSC_EXIST = (1 << 0),
   PARA_WAS_RESTORED = (1<< 1),
 };
 
-extern int32_t TSC_Para[7];
-extern SETTINGS infoSettings;
+int32_t TSC_Para[7];
+SETTINGS infoSettings;
 
 uint8_t paraStatus = 0;
 
@@ -21,7 +21,7 @@ void wordToByte(uint32_t word, uint8_t *bytes)
 {
   uint8_t len = 4;
   uint8_t i = 0;
-  for(i = 0; i < len; i++)
+  for (i = 0; i < len; i++)
   {
     bytes[i] = (word >> 24) & 0xFF;
     word <<= 8;
@@ -32,7 +32,7 @@ uint32_t byteToWord(uint8_t *bytes, uint8_t len)
 {
   uint32_t word = 0;
   uint8_t i = 0;
-  for(i = 0; i < len; i++)
+  for (i = 0; i < len; i++)
   {
     word <<= 8;
     word |= bytes[i];

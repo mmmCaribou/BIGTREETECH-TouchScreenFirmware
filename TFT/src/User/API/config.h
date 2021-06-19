@@ -6,8 +6,6 @@ extern "C" {
 #endif
 
 #include <stdbool.h>
-#include "variants.h"
-#include "includes.h"
 #include "ff.h"
 
 //after changing/adding/removing a keyword, change the CONFIG_FLASH_SIGN in Settings.h and PARA_SIGN in flashStore.c
@@ -19,6 +17,7 @@ extern "C" {
 //-----------------------------General Settings
 #define CONFIG_STATUS_SCREEN          "status_screen:"
 #define CONFIG_UART_BAUDRATE          "baudrate:"
+#define CONFIG_MULTI_SERIAL           "multi_serial:"
 #define CONFIG_LANGUAGE               "language:"
 
 #define CONFIG_TITLE_BG               "title_back_color:"
@@ -31,29 +30,35 @@ extern "C" {
 #define CONFIG_LIST_BUTTON_BG_COLOR   "list_button_bg_color:"
 #define CONFIG_MESH_MIN_COLOR         "mesh_min_color:"
 #define CONFIG_MESH_MAX_COLOR         "mesh_max_color:"
+#define CONFIG_TERMINAL_COLOR_SCHEME  "terminal_color_scheme:"
 
 #define CONFIG_ROTATE_UI              "rotate_ui:"
 #define CONFIG_TERMINAL_ACK           "terminal_ack:"
 #define CONFIG_INVERT_AXIS            "invert_axis:"
 #define CONFIG_PERSISTENT_TEMP        "persistent_info:"
 #define CONFIG_LIST_MODE              "files_list_mode:"
+#define CONFIG_FILES_SORT_BY          "files_sort_by:"
 #define CONFIG_ACK_NOTIFICATION       "ack_notification:"
+#define CONFIG_NOTIFICATION_M117      "notification_m117:"
+#define CONFIG_EMULATE_M600           "emulate_m600:"
 //-----------------------------Marlin Mode Settings (only for TFT24_V1.1 & TFT28/TFT35/TFT43/TFT50/TFT70_V3.0)
 #define CONFIG_MODE                   "default_mode:"
 #define CONFIG_SERIAL_ON              "serial_always_on:"
 #define CONFIG_MARLIN_BG_COLOR        "marlin_bg_color:"
 #define CONFIG_MARLIN_FONT_COLOR      "marlin_fn_color:"
-#define CONFIG_MARLIN_SHOW_TITLE      "marlin_show_title:"
-#define CONFIG_MARLIN_TYPE            "marlin_type:"
-#define CONFIG_MARLIN_TITLE           "marlin_title:"
 #define CONFIG_MARLIN_FULLSCREEN      "marlin_fullscreen:"
+#define CONFIG_MARLIN_SHOW_TITLE      "marlin_show_title:"
+#define CONFIG_MARLIN_TITLE           "marlin_title:"
+#define CONFIG_MARLIN_TYPE            "marlin_type:"
+//-----------------------------RRF Mode Settings
+#define CONFIG_RRF_MACROS_ON          "rrf_macros_on:"
 //-----------------------------Printer / Machine Settings
 #define CONFIG_HOTEND_COUNT           "hotend_count:"
 #define CONFIG_HEATED_BED             "heated_bed:"
 #define CONFIG_HEATED_CHAMBER         "heated_chamber:"
 #define CONFIG_EXT_COUNT              "ext_count:"
 #define CONFIG_FAN_COUNT              "fan_count:"
-#define CONFIG_FAN_CTRL_COUNT         "fan_ctrl_count:"
+#define CONFIG_CONTROLLER_FAN         "controller_fan:"
 #define CONFIG_MAX_TEMP               "max_temp:"
 #define CONFIG_MIN_TEMP               "min_temp:"
 #define CONFIG_FAN_MAX                "fan_max:"
@@ -78,6 +83,7 @@ extern "C" {
 #define CONFIG_LEVEL_Z_RAISE          "level_z_raise:"
 #define CONFIG_LEVEL_FEEDRATE         "level_feedrate:"
 #define CONFIG_XY_OFFSET_PROBING      "xy_offset_probing:"
+#define CONFIG_Z_RAISE_PROBING        "z_raise_probing:"
 #define CONFIG_Z_STEPPERS_ALIGNMENT   "z_steppers_alignment:"
 #define CONFIG_PREHEAT_NAME_1         "preheat_name1:"
 #define CONFIG_PREHEAT_NAME_2         "preheat_name2:"
@@ -112,6 +118,7 @@ extern "C" {
 #define CONFIG_HEATER_SOUND           "heater_sound:"
 #define CONFIG_KNOB_COLOR             "knob_led_color:"
 #define CONFIG_KNOB_LED_IDLE          "knob_led_idle:"
+#define CONFIG_NEOPIXEL_PIXELS        "neopixel_pixels:"
 #define CONFIG_BRIGHTNESS             "lcd_brightness:"
 #define CONFIG_BRIGHTNESS_IDLE        "lcd_idle_brightness:"
 #define CONFIG_BRIGHTNESS_IDLE_DELAY  "lcd_idle_delay:"
@@ -155,31 +162,34 @@ extern "C" {
 #define CONFIG_CANCEL_GCODE           "cancel_gcode:"
 
 //-----------------------------Limits
-#define MAX_SIZE_LIMIT            2000      // machine size over this will not be parsed.
-#define MAX_EXT_SPEED_LIMIT       5000      // Extruder speed over this will not pe parsed.
-#define MAX_TOOL_TEMP             300       // extruder temp over this will not pe parsed.
-#define MAX_BED_TEMP              200       // bed temp over this will not pe parsed.
-#define MAX_CHAMBER_TEMP          100       // bed temp over this will not pe parsed.
-#define MAX_SPEED_LIMIT           12000     // speed over this will not pe parsed.
-#define MAX_RUNOUT_DISTANCE       50        // runout distance over this will not pe parsed.
-#define MAX_DELAY_MS              1800      // time delay (ms) over this will not pe parsed.
-#define MAX_DELAY_SEC             100       // time delay (sec) over this will not pe parsed.
-#define MAX_RETRACT_LIMIT         20        // retract length over this will not be parsed.
-#define MAX_FAN_SPEED             255       // fan speed (PWM) over this will not be parsed.
+#define MAX_SIZE_LIMIT         2000  // machine size over this will not be parsed.
+#define MAX_EXT_SPEED_LIMIT    5000  // Extruder speed over this will not pe parsed.
+#define MAX_TOOL_TEMP          1000  // extruder temp over this will not pe parsed.
+#define MAX_BED_TEMP            200  // bed temp over this will not pe parsed.
+#define MAX_CHAMBER_TEMP        100  // bed temp over this will not pe parsed.
+#define MAX_SPEED_LIMIT       12000  // speed over this will not pe parsed.
+#define MAX_RUNOUT_DISTANCE      50  // runout distance over this will not pe parsed.
+#define MAX_DELAY_MS           1800  // time delay (ms) over this will not pe parsed.
+#define MAX_DELAY_SEC           100  // time delay (sec) over this will not pe parsed.
+#define MAX_RETRACT_LIMIT        20  // retract length over this will not be parsed.
+#define MAX_FAN_SPEED           255  // fan speed (PWM) over this will not be parsed.
+#define MAX_NEOPIXEL_PIXELS     200  // neopixel pixels over this will not be parsed.
 
-#define MIN_SIZE_LIMIT            -2000     // machine size less than this will not be parsed.
-#define NAME_MIN_LENGTH           3         // minimum name length
-#define GCODE_MIN_LENGTH          3         // gcode length less than this will not pe parsed.
-#define MIN_POS_LIMIT             0         // position value less than this will not be parsed.
-#define MIN_TOOL_TEMP             20        // extruder temp less than this will not pe parsed.
-#define MIN_BED_TEMP              20        // bed temp less than this will not pe parsed.
-#define MIN_CHAMBER_TEMP          20        // chamber temp less than this will not pe parsed.
-#define MIN_RUNOUT_DISTANCE       1         // runout distance less than this will not be parsed.
-#define MIN_DELAY_MS              10        // time delay (ms) less than this will not pe parsed.
-#define MIN_DELAY_SEC             1         // time delay (sec) less than this will not pe parsed.
-#define MIN_SPEED_LIMIT           10        // speed less than this will not pe parsed.
-#define MIN_RETRACT_LIMIT         0         // retract length less than this will not be parsed.
-#define MIN_FAN_SPEED             25        // fan speed (PWM) less than this will not be parsed.
+#define MIN_SIZE_LIMIT        -2000  // machine size less than this will not be parsed.
+#define NAME_MIN_LENGTH           3  // minimum name length
+#define GCODE_MIN_LENGTH          3  // gcode length less than this will not pe parsed.
+#define MIN_XY_POS_LIMIT      -2000  // Set a negative minimum position for Delta printers
+#define MIN_Z_POS_LIMIT           0
+#define MIN_Z_RAISE_PROBING   -2000  // Set a negative minimum position for Delta printers
+#define MIN_TOOL_TEMP            20  // extruder temp less than this will not pe parsed.
+#define MIN_BED_TEMP             20  // bed temp less than this will not pe parsed.
+#define MIN_CHAMBER_TEMP         20  // chamber temp less than this will not pe parsed.
+#define MIN_RUNOUT_DISTANCE       1  // runout distance less than this will not be parsed.
+#define MIN_DELAY_MS             10  // time delay (ms) less than this will not pe parsed.
+#define MIN_DELAY_SEC             1  // time delay (sec) less than this will not pe parsed.
+#define MIN_SPEED_LIMIT          10  // speed less than this will not pe parsed.
+#define MIN_RETRACT_LIMIT         0  // retract length less than this will not be parsed.
+#define MIN_FAN_SPEED            25  // fan speed (PWM) less than this will not be parsed.
 
 typedef struct
 {

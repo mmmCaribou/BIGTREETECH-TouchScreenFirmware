@@ -2,17 +2,18 @@
 #define _LANGUAGE_TC_H_
 
     // config.ini Parameter Settings / Feature Settings
-    #define STRING_STATUS_SCREEN          "Enable Status Screen"
     #define STRING_BAUDRATE               "串列傳輸速率"
     #define STRING_LANGUAGE               "正體中文"
     #define STRING_ROTATE_UI              "顯示方向"
     #define STRING_TERMINAL_ACK           "在G-code終端顯示溫度"
     #define STRING_PERSISTENT_INFO        "頂部溫度訊息"
     #define STRING_FILE_LIST_MODE         "文件預覽列表模式"
+    #define STRING_FILE_SORT_BY           "Sort files by"
     #define STRING_ACK_NOTIFICATION       "ACK 弹窗类型"
+    #define STRING_EMULATE_M600           "Emulate M600"
     #define STRING_SERIAL_ALWAYS_ON       "Serial Always ON"
-    #define STRING_MARLIN_SHOW_TITLE      "Marlin Mode Title Support"
     #define STRING_MARLIN_FULLSCREEN      "全螢幕Marlin模式"
+    #define STRING_MARLIN_SHOW_TITLE      "Marlin Mode Title Support"
     #define STRING_MARLIN_TYPE            "Marlin Mode Type"
     #define STRING_MOVE_SPEED             "移動速度(X Y Z)"
     #define STRING_AUTO_LOAD_LEVELING     "Auto Save Load Leveling"
@@ -51,9 +52,11 @@
     #define STRING_HOTEND_OFFSET          "Offset 2nd Nozzle"
     #define STRING_PROBE_OFFSET           "探針偏移"
     #define STRING_LIN_ADVANCE            "Linear Advance"
+    #define STRING_FILAMENT_SETTING       "Filament Diameter"
     #define STRING_CURRENT_SETTING        "驅動晶片電流設定 (mA)"
     #define STRING_BUMP_SENSITIVITY       "堵料檢測靈敏度"
     #define STRING_HYBRID_THRESHOLD       "TMC HybridThreshold"
+    #define STRING_STEALTH_CHOP           "TMC StealthChop"
     #define STRING_PRINT_ACCELERATION     "列印加速度"
     #define STRING_RETRACT_ACCELERATION   "回抽加速度"
     #define STRING_TRAVEL_ACCELERATION    "空跑加速度"
@@ -164,7 +167,7 @@
     #define STRING_DISABLE_STEPPERS       "解鎖電機"
     #define STRING_XY_UNLOCK              "解锁XY"
 
-    #define STRING_START_PRINT            "是否开始打印:\n %s?"
+    #define STRING_START_PRINT            "是否开始打印:\n%s?"
     #define STRING_STOP_PRINT             "要停止列印嗎？"
     #define STRING_IS_PAUSE               "列印時無法擠出耗材，要暫停列印嗎？"
     #define STRING_M0_PAUSE               "M0暫停"
@@ -268,8 +271,9 @@
     #define STRING_ABL_SLOT1              "Slot 1"
     #define STRING_ABL_SLOT2              "Slot 2"
     #define STRING_ABL_SLOT3              "Slot 3"
-    #define STRING_ABL_SLOT_EEPROM        "Remember slot for next\nreboot? (Save EEPROM)"
+    #define STRING_ABL_SLOT_EEPROM        "Save the mesh to EEPROM to load after reboot?"
     #define STRING_ABL_Z                  "Z Fade"
+    #define STRING_LEVEL_CORNER           "L corner"
     #define STRING_P_OFFSET               "P軸偏移"
     #define STRING_H_OFFSET               "H軸偏移"
     #define STRING_DISTANCE               "距離"
@@ -313,12 +317,10 @@
     #define STRING_TUNE_EXTRUDER          "Tune steps"
     #define STRING_TUNE_EXT_EXTRUDE_100   "挤出100mm"
     #define STRING_TUNE_EXT_TEMP          "Extruder tuning | Heat"
-    #define STRING_TUNE_EXT_TEMPLOW       "Desired temperature too low!\nMinimum temperature: %d C"
-    #define STRING_TUNE_EXT_DESIREDVAL    "Temperature is not yet at the desired value"
-    #define STRING_TUNE_EXT_MARK120MM     "Mark 120 mm on your fillament\nPress '%s' when ready\nMeasure remaining length\nafter extruding"
+    #define STRING_TUNE_EXT_MARK120MM     "Mark 120 mm on your fillament.\nPress '%s' when ready.\nMeasure remaining length after extruding."
     #define STRING_TUNE_EXT_HEATOFF       "Turn the heater off?"
     #define STRING_TUNE_EXT_ADJ_ESTEPS    "Adjust E-Steps"
-    #define STRING_TUNE_EXT_ESTEPS_SAVED  "New E-steps saved!\nDon't forget to\nsave it in EEPROM\nNew value: %0.2f"
+    #define STRING_TUNE_EXT_ESTEPS_SAVED  "New E-steps applied.\nDon't forget to save it in EEPROM.\nNew value: %0.2f"
     #define STRING_TUNE_EXT_MEASURED      "Length remaining:"
     #define STRING_TUNE_EXT_OLD_ESTEP     "Old e-steps: %0.2f"
     #define STRING_TUNE_EXT_NEW_ESTEP     "New e-steps: %0.2f"
@@ -327,8 +329,8 @@
     #define STRING_MESH_EDITOR            "Mesh edit"
     #define STRING_MESH_TUNER             "Mesh tuner"
     #define STRING_CASE_LIGHT             "Case light"
-    #define STRING_LOAD_STARTED           "Loading filament.\nPlease wait for the process\nto complete."  // translation needed
-    #define STRING_UNLOAD_STARTED         "Unloading filament.\nPlease wait for the process\nto complete."  // translation needed
+    #define STRING_LOAD_STARTED           "Loading filament.\nPlease wait for the process to complete."  // translation needed
+    #define STRING_UNLOAD_STARTED         "Unloading filament.\nPlease wait for the process to complete."  // translation needed
     #define STRING_HEATERS_ON             "Some heaters are still ON.\nDo you want to stop them?"  // translation needed
     #define STRING_PRINT_FINISHED         "   Print\n   finished"
     #define STRING_MAIN_SCREEN            "Main"
@@ -339,8 +341,13 @@
     #define STRING_FILAMENT_COST          "\nFilament cost: %1.2f"
     #define STRING_NO_FILAMENT_STATS      "\nFilament data not available."
     #define STRING_CLICK_FOR_MORE         "Click for summary"
-    #define STRING_EXT_TEMPLOW            "Hotend temperature is below\nminimum temperature (%d℃)."
+    #define STRING_EXT_TEMPLOW            "Hotend temperature is below minimum temperature (%d℃)."
     #define STRING_HEAT_HOTEND            "Heat hotend to %d℃?"
+    #define STRING_DESIRED_TEMPLOW        "Hotend temperature is below\ndesired temperature (%d℃)."
+    #define STRING_WAIT_HEAT_UP           "Wait for it to heat up."
+    #define STRING_NOZZLE_STABILIZING     "Wait, nozzle stabilizing..."
     #define STRING_Z_ALIGN                "Z Align"
+    #define STRING_MACROS                 "Macros"
+    #define STRING_MESH_VALID             "Mesh Validation"
 
 #endif
